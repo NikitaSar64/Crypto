@@ -1,0 +1,14 @@
+@import "./src/variables";
+
+.pages{
+    display: flex;
+}
+
+.page{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.page_active{
+    color: $blue;
+}

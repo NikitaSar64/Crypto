@@ -1,0 +1,36 @@
+@import "./src/variables";
+
+.loader{
+    border-radius: 50%;
+    animation: rotate 1s infinite linear;
+}
+
+.loader_size-l{
+    border: 6px solid $grey;
+    border-bottom: 6px solid $white;
+    width: 60px;
+    height: 60px;
+}
+
+.loader_size-m{
+    border: 4.5px solid $grey;
+    border-bottom: 4.5px solid $white;
+    width: 40px;
+    height: 40px;
+}
+
+.loader_size-s{
+    border: 3px solid $grey;
+    border-bottom: 3px solid $white;
+    width: 20px;
+    height: 20px;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    } 
+    to {
+        transform: rotate(360deg);
+    }
+}

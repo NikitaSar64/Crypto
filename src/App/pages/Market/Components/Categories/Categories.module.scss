@@ -1,0 +1,20 @@
+@import "./src/variables";
+
+.categories{
+    display: flex;
+
+}
+
+.categorie{
+    margin-right: 35px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.categorie_active{
+    margin-right: 35px;
+    color: $blue;
+    border-bottom: 3px solid $blue;
+    padding: 3px;
+    cursor: pointer;
+}

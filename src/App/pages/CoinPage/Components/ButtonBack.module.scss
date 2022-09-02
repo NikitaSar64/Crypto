@@ -1,0 +1,10 @@
+@import "./src/variables";
+
+.button{
+    width: 15px;
+    height: 15px;
+    border-top: 3px solid $black;
+    border-left: 3px solid $black;
+    transform: rotate(-45deg);
+    cursor: pointer;
+}
