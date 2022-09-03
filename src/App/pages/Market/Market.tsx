@@ -1,8 +1,8 @@
 import { useState, useEffect, FC } from "react";
 
+import { fetchCoinsList } from "@api/CryptoApi";
 import { Card } from "@components/Card";
 import { Loader, LoaderSize } from "@components/Loader";
-import { fetchCoinsList } from "@api/CryptoApi";
 import { CoinsListModel, normalizeCoinsList } from "@store/models/crypto";
 
 import { Categories } from "./Components/Categories";
@@ -18,9 +18,9 @@ export const Market = () => {
 
   useEffect(() => {
     fetchCoinsList(perPage, currentPage).then((data) => {
-      setCoinList(data.map(elem => normalizeCoinsList(elem)));
+      setCoinList(data.map((elem) => normalizeCoinsList(elem)));
       setisCoinsLoading(false);
-        });
+    });
   }, [currentPage]);
 
   return (

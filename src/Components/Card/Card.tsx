@@ -1,8 +1,9 @@
 import { FC } from "react";
 
 import routes from "@configs/routes";
-import { Link } from "react-router-dom";
 import formatPercentage from "@utils/formatPercentage";
+import { Link } from "react-router-dom";
+
 import CardStyle from "./Card.module.scss";
 
 export type CardProps = {
