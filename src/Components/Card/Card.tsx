@@ -1,5 +1,8 @@
 import { FC } from "react";
 
+import routes from "@configs/routes";
+import { Link } from "react-router-dom";
+import formatPercentage from "@utils/formatPercentage";
 import CardStyle from "./Card.module.scss";
 
 export type CardProps = {
@@ -7,9 +10,8 @@ export type CardProps = {
   image: string;
   name: string;
   symbol: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-  onClick: (name: string) => void;
+  currentPrice: number;
+  priceChange: number;
 };
 
 export const Card: FC<CardProps> = ({
@@ -17,33 +19,34 @@ export const Card: FC<CardProps> = ({
   image,
   name,
   symbol,
-  current_price,
-  price_change_percentage_24h,
-  onClick,
+  currentPrice,
+  priceChange,
 }) => {
   return (
-    <div className={CardStyle.card} onClick={() => onClick(id)}>
-      <div className={CardStyle.card__wrapper_flex}>
-        <img className={CardStyle.card__img} src={image} alt="img" />
+    <Link to={routes.markets.detail.createRoute(id)}>
+      <div className={CardStyle.card}>
+        <div className={CardStyle.card__wrapper_flex}>
+          <img className={CardStyle.card__img} src={image} alt="img" />
+          <div className={CardStyle.card__wrapper}>
+            <div className={CardStyle.card__name}>{name}</div>
+            <div className={CardStyle.card__symbol}>
+              {symbol.toLocaleUpperCase()}
+            </div>
+          </div>
+        </div>
         <div className={CardStyle.card__wrapper}>
-          <div className={CardStyle.card__name}>{name}</div>
-          <div className={CardStyle.card__symbol}>
-            {symbol.toLocaleUpperCase()}
+          <div className={CardStyle.card__price}>₹{currentPrice}</div>
+          <div
+            className={
+              priceChange > 0
+                ? CardStyle.card__priceChange_up
+                : CardStyle.card__priceChange_down
+            }
+          >
+            {formatPercentage(priceChange, 2)}
           </div>
         </div>
       </div>
-      <div className={CardStyle.card__wrapper}>
-        <div className={CardStyle.card__price}>₹{current_price}</div>
-        <div
-          className={
-            price_change_percentage_24h > 0
-              ? CardStyle.card__priceChange_up
-              : CardStyle.card__priceChange_down
-          }
-        >
-          {price_change_percentage_24h.toFixed(2)}%
-        </div>
-      </div>
-    </div>
+    </Link>
   );
 };

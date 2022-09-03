@@ -1,25 +1,22 @@
-import { useState } from "react";
+import { FC } from "react";
 
-import { CoinPage } from "@pages/CoinPage";
+import routes from "@configs/routes";
+import CoinPage from "@pages/CoinPage";
 import { Market } from "@pages/Market";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
-  const [coinId, setCoinId] = useState<string>("");
-
+const App: FC = () => {
+  //console.log(routes.markets.detail.mask);
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={<Market onClick={(id) => setCoinId(id)} />}
-          />
-          <Route path="/coinpage" element={<CoinPage id={coinId} />} />
+          <Route path={routes.main.mask} element={<Market />} />
+          <Route path={routes.markets.detail.mask} element={<CoinPage />} />
         </Routes>
       </BrowserRouter>
     </>
   );
-}
+};
 
 export default App;

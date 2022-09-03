@@ -1,36 +1,26 @@
 import { useState, useEffect, FC } from "react";
 
-import { Card, CardProps } from "@components/Card";
+import { Card } from "@components/Card";
 import { Loader, LoaderSize } from "@components/Loader";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { fetchCoinsList } from "@api/CryptoApi";
+import { CoinsListModel, normalizeCoinsList } from "@store/models/crypto";
 
 import { Categories } from "./Components/Categories";
 import { Pagination } from "./Components/Pagination";
 import marketStyle from "./Market.module.scss";
 
-export type marketProps = {
-  onClick: (name: string) => void;
-};
-
-export const Market: FC<marketProps> = ({ onClick }) => {
-  const [coinList, setCointList] = useState<CardProps[]>([]);
+export const Market = () => {
+  const [coinList, setCoinList] = useState<CoinsListModel[]>([]);
   const [categorie, setCategorie] = useState<number>(0);
-  const [isCoinsLoading, setisCoinsLoading] = useState<boolean>(false);
+  const [isCoinsLoading, setisCoinsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const perPage: number = 7;
 
-  const requestСurList = async () => {
-    setisCoinsLoading(true);
-    const response = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=${perPage}&page=${currentPage}`
-    );
-    setCointList(response.data);
-    setisCoinsLoading(false);
-  };
-
   useEffect(() => {
-    requestСurList();
+    fetchCoinsList(perPage, currentPage).then((data) => {
+      setCoinList(data.map(elem => normalizeCoinsList(elem)));
+      setisCoinsLoading(false);
+        });
   }, [currentPage]);
 
   return (
@@ -44,18 +34,15 @@ export const Market: FC<marketProps> = ({ onClick }) => {
           <Loader size={LoaderSize.l} className="loader" />
         ) : (
           coinList.map((coin) => (
-            <Link to="/coinpage">
-              <Card
-                id={coin.id}
-                key={coin.symbol}
-                name={coin.name}
-                symbol={coin.symbol}
-                image={coin.image}
-                current_price={coin.current_price}
-                price_change_percentage_24h={coin.price_change_percentage_24h}
-                onClick={(name) => onClick(name)}
-              />
-            </Link>
+            <Card
+              id={coin.id}
+              key={coin.symbol}
+              name={coin.name}
+              symbol={coin.symbol}
+              image={coin.image}
+              currentPrice={coin.price}
+              priceChange={coin.priceChange}
+            />
           ))
         )}
       </div>
