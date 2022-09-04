@@ -11,8 +11,8 @@ export type CardProps = {
   image: string;
   name: string;
   symbol: string;
-  currentPrice: number;
-  priceChange: number;
+  currentPrice?: number;
+  priceChange?: number;
 };
 
 export const Card: FC<CardProps> = ({

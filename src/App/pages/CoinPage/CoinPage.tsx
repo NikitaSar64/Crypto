@@ -2,13 +2,15 @@ import { FC, useEffect } from "react";
 
 import { Loader, LoaderSize } from "@components/Loader";
 import { ButtonBack } from "@pages/CoinPage/Components";
-import coinStore from "@store/CoinStore";
+import CoinStore from "@store/CoinStore";
 import formatPercentage from "@utils/formatPercentage";
 import Meta from "@utils/meta";
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
 
 import CoinPageStyle from "./CoinPage.module.scss";
+
+const coinStore = new CoinStore();
 
 const CoinPage: FC = () => {
   const { id } = useParams();

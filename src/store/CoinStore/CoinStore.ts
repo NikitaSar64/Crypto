@@ -18,6 +18,7 @@ export default class CoinStore {
   }
 
   async getCoin(id: string | undefined) {
+    this._meta = Meta.loading;
     const responseCoin = await fetchCoin(id);
     this._meta = Meta.success;
     this._coin = normalizeCoin(responseCoin);

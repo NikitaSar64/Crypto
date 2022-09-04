@@ -13,6 +13,11 @@ const ROUTES = {
       mask: "markets/:id",
     },
   },
+
+  search: {
+    createRoute: (): string => "/search",
+    mask: "search",
+  }
 };
 
 export default ROUTES;
