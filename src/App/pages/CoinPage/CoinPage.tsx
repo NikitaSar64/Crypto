@@ -3,16 +3,16 @@ import { FC, useEffect } from "react";
 import { Loader, LoaderSize } from "@components/Loader";
 import { ButtonBack } from "@pages/CoinPage/Components";
 import CoinStore from "@store/CoinStore";
+import { useLocalStore } from "@utils/useLocalStore";
 import formatPercentage from "@utils/formatPercentage";
 import Meta from "@utils/meta";
 import { observer } from "mobx-react-lite";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import CoinPageStyle from "./CoinPage.module.scss";
 
-const coinStore = new CoinStore();
-
 const CoinPage: FC = () => {
+  const coinStore = useLocalStore(() => new CoinStore());
   const { id } = useParams();
 
   useEffect(() => {
@@ -26,9 +26,7 @@ const CoinPage: FC = () => {
       ) : (
         <>
           <div className={CoinPageStyle.coin__wrapper}>
-            <Link to="/">
-              <ButtonBack />
-            </Link>
+            <ButtonBack />
             <img src={coinStore.coin?.image} alt="coin_img" />
             <div className={CoinPageStyle.coin__name}>
               {coinStore.coin?.name}

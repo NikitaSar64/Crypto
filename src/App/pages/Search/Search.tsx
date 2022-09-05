@@ -1,20 +1,18 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import Input from "@components/Input";
 import { useSearchParams } from "react-router-dom";
-import { Card } from "@components/Card";
-import SearchStore from "@store/SearchStore";
+import { SearchCard } from "@components/SearchCard";
 import { observer } from "mobx-react-lite";
-
-const searchStore = new SearchStore();
+import { useLocalStore } from "@utils/useLocalStore";
+import SearchStore from "@store/SearchStore";
 
 const Search : FC = () => {
+  const searchStore = useLocalStore(() => new SearchStore());
   const [searchParams, setSearchParams] = useSearchParams();
-  //const [search, setSearch] = useState("");
 
   const handleChange = (e: any) => {
-    //setSearch(e.target.value);
-    //setSearchParams({search})
     searchStore.setValue(e.target.value);
+    setSearchParams({search : searchStore.value})
   };
 
   useEffect(() => {
@@ -28,18 +26,17 @@ const Search : FC = () => {
         <Input
         value={searchStore.value}
         onChange={handleChange}
-        className='{styles.search__input}'
         placeholder="Search Cryptocurrency" 
         />
         {
           searchStore.searchCoinsList.map((coin) => {
             return (
-              <div key={coin.id}>
-              {coin.id}
-              {coin.name}
-              {coin.symbol}
-              {coin.large}
-              </div>
+              <SearchCard
+              id={coin.id}
+              key={coin.id}
+              name={coin.name}
+              image={coin.large}
+              symbol={coin.symbol}/>
             )}
         )}
         </>

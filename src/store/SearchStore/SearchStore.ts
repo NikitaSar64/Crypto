@@ -1,7 +1,8 @@
 import { fetchSearchCoins } from "@api/CryptoApi";
 import Meta from "@utils/meta";
 import { CoinSearchModel } from "@store/models/crypto";
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, reaction } from "mobx";
+import rootStore from "@store/RootStore";
 
 type PrivateFields = "_searchCoinsList" | "_meta" | "_value";
 
@@ -18,8 +19,15 @@ export default class SearchStore {
         getCoinsList: action,
         setValue: action,
       });
+
+      reaction(
+        () => this._value = rootStore.query.getParam('search'),
+        (search) => {
+          //console.log(search);
+        }
+      );
     }
-  
+
     async getCoinsList(value : string) {
       const respSearchCoinsList = await fetchSearchCoins(value);
       this._searchCoinsList = respSearchCoinsList;
@@ -35,5 +43,9 @@ export default class SearchStore {
 
     get value(){
         return this._value;
+    }
+
+    destroy(){
+
     }
   }

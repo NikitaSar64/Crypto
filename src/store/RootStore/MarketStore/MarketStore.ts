@@ -3,18 +3,20 @@ import { CoinsListModel, normalizeCoinsList } from "@store/models/crypto";
 import Meta from "@utils/meta";
 import { action, makeObservable, observable } from "mobx";
 
-type PrivateFields = "_coinsList" | "_meta" | "_currentPage";
+type PrivateFields = "_coinsList" | "_meta" | "_currentPage" | "_scroll";
 
 export default class MarketStore {
     private _coinsList: CoinsListModel[] = [];
     private _meta: Meta = Meta.loading;
     private _currentPage: number = 1;
+    private _scroll: boolean = true;
   
     constructor() {
       makeObservable<MarketStore, PrivateFields>(this, {
         _coinsList: observable,
         _meta: observable,
         _currentPage: observable,
+        _scroll: observable,
         getCoinsList: action,
         changePage: action,
       });
@@ -25,16 +27,16 @@ export default class MarketStore {
       this._meta = Meta.success;
       const tempCoinsList : CoinsListModel[] = responseCoinsList.map((coin) => normalizeCoinsList(coin))
       this._coinsList = [...this._coinsList, ...tempCoinsList];
+      this._scroll = false;
     }
 
     changePage() {
         this._currentPage += 1;
+        this._scroll = true;
     }
 
-    clearStore() {
-        this._currentPage = 1;
-        this._coinsList = [];
-        this._meta = Meta.loading;
+    get scroll(){
+        return this._scroll;
     }
   
     get coinsList() {
@@ -47,5 +49,9 @@ export default class MarketStore {
 
     get currentPage(){
         return this._currentPage;
+    }
+
+    destroy() {
+      
     }
   }
