@@ -3,9 +3,9 @@ import { FC, useEffect } from "react";
 import { Loader, LoaderSize } from "@components/Loader";
 import { ButtonBack } from "@pages/CoinPage/Components";
 import CoinStore from "@store/CoinStore";
-import { useLocalStore } from "@utils/useLocalStore";
 import formatPercentage from "@utils/formatPercentage";
 import Meta from "@utils/meta";
+import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 

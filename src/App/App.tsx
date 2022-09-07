@@ -4,8 +4,8 @@ import routes from "@configs/routes";
 import CoinPage from "@pages/CoinPage";
 import Market from "@pages/Market";
 import Search from "@pages/Search";
-import { Routes, Route } from "react-router-dom";
 import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
+import { Routes, Route } from "react-router-dom";
 
 const App: FC = () => {
   useQueryParamsStoreInit();

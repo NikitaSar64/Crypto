@@ -22,5 +22,5 @@ export const normalizeCoinsList = (from: CoinsListApi): CoinsListModel => ({
   image: from.image,
   symbol: from.symbol,
   price: from.current_price,
-  priceChange: from.current_price,
+  priceChange: from.price_change_percentage_24h,
 });

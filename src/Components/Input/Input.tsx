@@ -1,5 +1,9 @@
 import { FC } from "react";
 
+import inputIcon from "@assets/images/inputicon.svg";
+
+import inputStyle from "./Input.module.scss";
+
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange"
@@ -17,14 +21,21 @@ const Input: FC<InputProps> = ({
   ...other
 }) => {
   return (
-    <input
-      type={type}
-      value={value}
-      onChange={onChange}
-      className="1"
-      disabled={disabled}
-      {...other}
-    />
+    <div className={inputStyle.inputWrapper}>
+      <img
+        className={inputStyle.input__icon}
+        src={inputIcon}
+        alt="search-icon"
+      />
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        className={inputStyle.input}
+        disabled={disabled}
+        {...other}
+      />
+    </div>
   );
 };
 

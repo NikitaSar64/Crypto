@@ -15,7 +15,7 @@ export const fetchCoin = async (id: string | undefined) => {
   return response.data;
 };
 
-export const fetchSearchCoins = async (value : string) => {
+export const fetchSearchCoins = async (value: string) => {
   const response = await axios.get(
     `https://api.coingecko.com/api/v3/search?query=${value}&per_page=7`
   );

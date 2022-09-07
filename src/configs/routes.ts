@@ -17,7 +17,7 @@ const ROUTES = {
   search: {
     createRoute: (): string => "/search",
     mask: "search",
-  }
+  },
 };
 
 export default ROUTES;

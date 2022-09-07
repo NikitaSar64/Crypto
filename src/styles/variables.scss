@@ -1,0 +1,32 @@
+// colors
+
+$white: #FFFFFF;
+$lightgrey: #F5F5F5;
+$lightgrey-input: #DFE2E4;
+$black: #212529;
+$grey: #6C757D;
+$green: #21BF73;
+$red: #D90429;
+$blue: #0063F5;
+
+// padding, margin
+
+$spacing-unit-1: 4px;
+$spacing-unit-2: 8px;
+$spacing-unit-3: 12px;
+$spacing-unit-4: 16px;
+$spacing-unit-5: 20px;
+$spacing-unit-6: 24px;
+$spacing-unit-7: 28px;
+$spacing-unit-8: 32px;
+$spacing-unit-9: 36px;
+$spacing-unit-10: 40px;
+
+// mixins
+
+@mixin text($font-w, $font-s, $line-h, $text-c: $text-color) {
+    font-weight: $font-w;
+    font-size: $font-s;
+    line-height: $line-h;
+    color: $text-c;
+  }

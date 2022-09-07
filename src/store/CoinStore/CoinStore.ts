@@ -32,7 +32,5 @@ export default class CoinStore {
     return this._meta;
   }
 
-  destroy() {
-    
-  }
+  destroy() {}
 }
