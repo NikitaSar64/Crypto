@@ -1,42 +1,43 @@
-@import "./src/variables";
+@import "@styles/variables.scss";
 
 .card{
-    padding: 16px;
+    padding: $spacing-unit-4;
     display: flex;
     justify-content: space-between;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.075);
     border-radius: 8px;
     background: $white;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-unit-2;
     font-weight: 450;
-    .card__wrapper_flex{
+    &__wrapper_flex{
         display: flex;
     }
-    .card__img{
+    &__img{
         display: block;
         width: 40px;
         height: 40px;
-        margin-right: 12px;
+        margin-right: $spacing-unit-3;
     }
-    .card__name{
-        font-size: 16px;
-        color: $black;
+    &__name{
+        @include text(450, 18px, 20px, $black);
+        margin-bottom: $spacing-unit-1;
     }
-    .card__symbol{
-        font-size: 12px;
-        color: $grey;
+    &__symbol{
+        @include text(450, 12px, 15px, $grey);
     }
-    .card__price{
+    &__price{
+        @include text(450, 18px, 20px, $black);
+        margin-bottom: $spacing-unit-1;
         text-align: right;
-        font-size: 16px;
-        color: $black;
     }
-    .card__priceChange_down{
+    &__priceChange{
+        @include text(500, 10px, 13px, $black);
         text-align: right;
-        color: $red;
-    }
-    .card__priceChange_up{
-        text-align: right;
-        color: $green;
+        &_down{
+            color: $red;
+        }
+        &_up{
+            color: $green;
+        }
     }
 }
