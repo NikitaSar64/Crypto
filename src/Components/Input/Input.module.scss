@@ -1,0 +1,20 @@
+@import "@styles/variables.scss";
+
+.inputWrapper{
+    background: $white;
+    padding: $spacing-unit-3 $spacing-unit-2;
+    border: 1px solid $lightgrey-input;
+    border-radius: 4px;
+    display:  flex;
+    align-items: center;
+    .input__icon{
+        margin-right: $spacing-unit-3;
+    }
+    .input{
+        border: none;
+        outline: none;
+    }
+    input::placeholder{
+        @include text(450, 12px, 15px, $lightgrey-input);
+    }
+}

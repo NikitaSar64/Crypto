@@ -1,69 +1,72 @@
 import { useState, useEffect, FC } from "react";
 
-import { Card, CardProps } from "@components/Card";
+import searchIcon from "@assets/images/search.svg";
+import { Card } from "@components/Card";
 import { Loader, LoaderSize } from "@components/Loader";
-import axios from "axios";
+import routes from "@configs/routes";
+import rootStore from "@store/RootStore";
+import Meta from "@utils/meta";
+import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 
 import { Categories } from "./Components/Categories";
-import { Pagination } from "./Components/Pagination";
 import marketStyle from "./Market.module.scss";
 
-export type marketProps = {
-  onClick: (name: string) => void;
-};
-
-export const Market: FC<marketProps> = ({ onClick }) => {
-  const [coinList, setCointList] = useState<CardProps[]>([]);
+const Market: FC = () => {
   const [categorie, setCategorie] = useState<number>(0);
-  const [isCoinsLoading, setisCoinsLoading] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const perPage: number = 7;
-
-  const requestСurList = async () => {
-    setisCoinsLoading(true);
-    const response = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=${perPage}&page=${currentPage}`
-    );
-    setCointList(response.data);
-    setisCoinsLoading(false);
-  };
 
   useEffect(() => {
-    requestСurList();
-  }, [currentPage]);
+    if (rootStore.marketStore.scroll) {
+      rootStore.marketStore.getCoinsList();
+    }
+  }, [rootStore.marketStore.currentPage]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+    return function () {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  const scrollHandler = (e: any) => {
+    if (
+      e.target.documentElement.scrollHeight ===
+      e.target.documentElement.scrollTop + window.innerHeight
+    ) {
+      rootStore.marketStore.changePage();
+    }
+  };
 
   return (
-    <>
+    <div className={marketStyle.market}>
+      <div>
+        <Link to={routes.search.mask}>
+          <img src={searchIcon} alt="search" />
+        </Link>
+      </div>
       <Categories
         categorieIndex={categorie}
         onClick={(index) => setCategorie(index)}
       />
-      <div className={marketStyle.market}>
-        {isCoinsLoading ? (
+      <div className={marketStyle.market__wrapper}>
+        {rootStore.marketStore.meta === Meta.loading ? (
           <Loader size={LoaderSize.l} className="loader" />
         ) : (
-          coinList.map((coin) => (
-            <Link to="/coinpage">
-              <Card
-                id={coin.id}
-                key={coin.symbol}
-                name={coin.name}
-                symbol={coin.symbol}
-                image={coin.image}
-                current_price={coin.current_price}
-                price_change_percentage_24h={coin.price_change_percentage_24h}
-                onClick={(name) => onClick(name)}
-              />
-            </Link>
+          rootStore.marketStore.coinsList.map((coin) => (
+            <Card
+              id={coin.id}
+              key={coin.symbol}
+              name={coin.name}
+              symbol={coin.symbol}
+              image={coin.image}
+              currentPrice={coin.price}
+              priceChange={coin.priceChange}
+            />
           ))
         )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        perPage={perPage}
-        onClick={(numberPage) => setCurrentPage(numberPage)}
-      />
-    </>
+    </div>
   );
 };
+
+export default observer(Market);

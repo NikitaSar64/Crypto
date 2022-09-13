@@ -1,15 +1,21 @@
-import React from "react";
+import React from 'react';
 
+import "@configs/configureMobX";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-import "./index.css";
-import App from "./App/App";
+import "@styles/index.scss";
+import App from "@app/App";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+    document.getElementById("root") as HTMLElement
+  );
+  root.render(
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  );
+
+if (module.hot){
+    module.hot.accept();
+}

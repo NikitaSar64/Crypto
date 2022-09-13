@@ -1,20 +1,23 @@
-@import "./src/variables";
+@import "@styles/variables.scss";
 
 .categories{
-    display: flex;
-
+    margin: $spacing-unit-4 0;
+    border-bottom: 1px solid #DFE2E4;
+    .categories__wrapper{
+        padding: 0 $spacing-unit-4;
+        display: flex;
+        .categorie{
+            margin-right: $spacing-unit-9;
+            padding: $spacing-unit-1;
+            cursor: pointer;
+            &_active{
+                color: $blue;
+                margin-right: $spacing-unit-9;
+                border-bottom: 3px solid $blue;
+                padding: $spacing-unit-1;
+                cursor: pointer;
+            }
+        }  
+    }
 }
 
-.categorie{
-    margin-right: 35px;
-    padding: 3px;
-    cursor: pointer;
-}
-
-.categorie_active{
-    margin-right: 35px;
-    color: $blue;
-    border-bottom: 3px solid $blue;
-    padding: 3px;
-    cursor: pointer;
-}

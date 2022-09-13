@@ -1,25 +1,22 @@
-import { useState } from "react";
+import routes from "@configs/routes";
+import CoinPage from "@pages/CoinPage";
+import Market from "@pages/Market";
+import Search from "@pages/Search";
+import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
+import { Routes, Route } from "react-router-dom";
 
-import { CoinPage } from "@pages/CoinPage";
-import { Market } from "@pages/Market";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-function App() {
-  const [coinId, setCoinId] = useState<string>("");
+const App = () => {
+  useQueryParamsStoreInit();
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<Market onClick={(id) => setCoinId(id)} />}
-          />
-          <Route path="/coinpage" element={<CoinPage id={coinId} />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path={routes.main.mask} element={<Market />} />
+        <Route path={routes.markets.detail.mask} element={<CoinPage />} />
+        <Route path={routes.search.mask} element={<Search />} />
+      </Routes>
     </>
   );
-}
+};
 
 export default App;
