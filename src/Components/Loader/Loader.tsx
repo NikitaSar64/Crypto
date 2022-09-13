@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import LoaderStyle from "./Loader.module.scss";
 
 export enum LoaderSize {
@@ -12,11 +14,11 @@ export type LoaderProps = {
   className?: string;
 };
 
-export const Loader = ({
+export const Loader: FC<LoaderProps> = ({
   size = LoaderSize.m,
   loading = true,
   className,
-}: LoaderProps) => {
+}) => {
   return (
     <>
       {loading && (

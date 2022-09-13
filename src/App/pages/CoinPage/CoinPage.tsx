@@ -1,73 +1,60 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
-import { ButtonBack } from "@pages/CoinPage/Components";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Loader, LoaderSize } from "@components/Loader";
+import { ButtonBack } from "./Components/ButtonBack";
+import CoinStore from "@store/CoinStore";
+import formatPercentage from "@utils/formatPercentage";
+import Meta from "@utils/meta";
+import { useLocalStore } from "@utils/useLocalStore";
+import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
 
+import cn from "classnames";
 import CoinPageStyle from "./CoinPage.module.scss";
 
-interface Coin {
-  id: string;
-  name?: string;
-  symbol?: string;
-  image?: string;
-  price?: number;
-  priceChange?: number;
-}
-
-export const CoinPage: FC<Coin> = ({ id }) => {
-  const [coin, setCoin] = useState<Coin>({
-    id: "",
-    name: "",
-    symbol: "",
-    image: "",
-    price: 0,
-    priceChange: 0,
-  });
-
-  const requestCoin = async () => {
-    const response = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/${id}`
-    );
-
-    setCoin({
-      id: response.data.id,
-      name: response.data.name,
-      image: response.data.image.small,
-      symbol: response.data.symbol,
-      price: response.data.market_data.current_price.usd,
-      priceChange: response.data.market_data.price_change_24h_in_currency.usd,
-    });
-  };
+const CoinPage: FC = () => {
+  const coinStore = useLocalStore(() => new CoinStore());
+  const { id } = useParams();
 
   useEffect(() => {
-    requestCoin();
-  }, [coin]);
+    coinStore.getCoin(id);
+  }, []);
 
   return (
     <>
-      <div className={CoinPageStyle.coin__wrapper}>
-        <Link to="/">
-          <ButtonBack />
-        </Link>
-        <img src={coin.image} alt="coin_img" />
-        <div className={CoinPageStyle.coin__name}>{coin.name}</div>
-        <div className={CoinPageStyle.coin__symbol}>
-          ({coin.symbol?.toLocaleUpperCase()})
-        </div>
-      </div>
-      <div className={CoinPageStyle.coin__wrapper}>
-        <div className={CoinPageStyle.coin__price}>₹ {coin.price}</div>
-        <div
-          className={
-            coin.priceChange > 0
-              ? CoinPageStyle.coin__priceChange_up
-              : CoinPageStyle.coin__priceChange_down
-          }
-        >
-          {coin.priceChange}
-        </div>
-      </div>
+      {coinStore.meta === Meta.loading ? (
+        <Loader size={LoaderSize.l} className="loader" />
+      ) : (
+        <>
+          <div className={CoinPageStyle.coin__wrapper}>
+            <ButtonBack />
+            <img src={coinStore.coin?.image} alt="coin_img" />
+            <div className={CoinPageStyle.coin__name}>
+              {coinStore.coin?.name}
+            </div>
+            <div className={CoinPageStyle.coin__symbol}>
+              ({coinStore.coin?.symbol?.toLocaleUpperCase()})
+            </div>
+          </div>
+          <div className={CoinPageStyle.coin__wrapper}>
+            <div className={CoinPageStyle.coin__price}>
+              ₹ {formatPercentage(coinStore.coin?.price, 2)}
+            </div>
+            <div
+              className={cn(
+                coinStore?.coin?.priceChange !== undefined
+                  ? (coinStore.coin.priceChange > 0 ? CoinPageStyle.coin__priceChange_up : CoinPageStyle.coin__priceChange_down)
+                  : ""
+              )
+              }
+            >
+              {formatPercentage(coinStore?.coin?.priceChange, 2)}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
+
+export default observer(CoinPage);
