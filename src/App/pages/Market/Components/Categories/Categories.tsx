@@ -1,5 +1,7 @@
 import { FC } from "react";
 
+import cn from "classnames";
+
 import categoriesStyle from "./Categories.module.scss";
 
 export type CategoriesProps = {
@@ -15,21 +17,23 @@ export const Categories: FC<CategoriesProps> = ({
 
   return (
     <div className={categoriesStyle.categories}>
-      {categories.map((elem, index) => {
-        return (
-          <div
-            key={elem}
-            className={
-              categorieIndex === index
-                ? categoriesStyle.categorie_active
-                : categoriesStyle.categorie
-            }
-            onClick={() => onClick(index)}
-          >
-            {elem}
-          </div>
-        );
-      })}
+      <div className={categoriesStyle.categories__wrapper}>
+        {categories.map((elem, index) => {
+          return (
+            <div
+              key={elem}
+              className={cn(
+                categorieIndex === index
+                  ? categoriesStyle.categorie_active
+                  : categoriesStyle.categorie
+              )}
+              onClick={() => onClick(index)}
+            >
+              {elem}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

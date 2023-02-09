@@ -4,9 +4,12 @@
       "paths": {
         "@pages/*": ["src/App/pages/*"],
         "@components/*": ["src/Components/*"],
-        "@config/*": ["src/config/*"],
+        "@configs/*": ["src/configs/*"],
         "@styles/*": ["src/styles/*"],
-        "@utils/*": ["src/utils/*"]
+        "@utils/*": ["src/utils/*"],
+        "@api/*": ["src/api/*"],
+        "@store/*": ["src/store/*"],
+        "@assets/*": ["src/assets/*"]
       }
     }
   }
