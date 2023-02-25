@@ -4,8 +4,8 @@
       "baseUrl": "src",
       "paths": {
         "@components/*":["components/*"],
-        "@app/*": ["App/*"],
-        "@pages/*": ["App/pages/*"],
+        "@app/*": ["app/*"],
+        "@pages/*": ["app/pages/*"],
         "@configs/*": ["configs/*"],
         "@styles/*": ["styles/*"],
         "@utils/*": ["utils/*"],

@@ -1,57 +1,29 @@
-import { FC } from "react";
-
-import routes from "@configs/routes";
-import formatPercentage from "@utils/formatPercentage";
-import cn from "classnames";
-import { Link } from "react-router-dom";
-
 import cardStyle from "./Card.module.scss";
+import { CardProps } from "./Card.props";
+import cn from "classnames";
 
-export type CardProps = {
-  id: string;
-  image: string;
-  name: string;
-  symbol: string;
-  currentPrice?: number;
-  priceChange?: number;
-};
-
-export const Card: FC<CardProps> = ({
-  id,
-  image,
-  name,
-  symbol,
-  currentPrice,
-  priceChange = -1,
-}) => {
+export const Card = ({name, price, img, priceChangePercent, priceChangeCurrency} : CardProps)  : JSX.Element=> {
   return (
-    <Link to={routes.markets.detail.createRoute(id)}>
       <div className={cardStyle.card}>
-        <div className={cardStyle.card__wrapper_flex}>
-          <img className={cardStyle.card__img} src={image} alt="img" />
-          <div className={cardStyle.card__wrapper}>
-            <div className={cardStyle.card__name}>{name}</div>
-            <div className={cardStyle.card__symbol}>
-              {symbol.toLocaleUpperCase()}
-            </div>
-          </div>
+        <div className={cardStyle.coinName}>
+          <img className={cardStyle.cardImg} src={img} alt={name}/>
+          <div>{name}</div>
         </div>
-        {currentPrice && (
-          <div className={cardStyle.card__wrapper}>
-            <div className={cardStyle.card__price}>₹{currentPrice}</div>
-            <div
-              className={cn(
-                cardStyle.card__priceChange,
-                priceChange > 0
-                  ? cardStyle.card__priceChange_up
-                  : cardStyle.card__priceChange_down
-              )}
-            >
-              {formatPercentage(priceChange, 2)}
-            </div>
-          </div>
-        )}
+        <div>{price}</div>
+        <div 
+          className={cn({
+            [cardStyle.changeUp] : priceChangePercent >= 0,
+            [cardStyle.changeDown] : priceChangePercent < 0
+          })}>
+          {priceChangePercent.toFixed(2)}
+        </div>
+        <div
+          className={cn({
+            [cardStyle.changeUp] : priceChangePercent >= 0,
+            [cardStyle.changeDown] : priceChangePercent < 0
+          })}>
+          {priceChangeCurrency.toFixed(2)}
+        </div>
       </div>
-    </Link>
   );
 };

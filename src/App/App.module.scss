@@ -1,0 +1,43 @@
+.container{
+    height: 100vh;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1%;
+    height: 85%;
+}
+
+.chart{
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: white;
+    resize: both;
+    cursor: e-resize;
+}
+
+.quotes{
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow-y: scroll;
+    background: white;
+}
+
+.header{
+    border: 2px solid transparent;
+    height: 5%;
+    margin-bottom: 1%;
+    background: white;
+    border-radius: 10px;
+}
+
+.footer{
+    border: 2px solid transparent;
+    height: 5%;
+    margin-top: 1%;
+    background: white;
+    border-radius: 10px;
+}

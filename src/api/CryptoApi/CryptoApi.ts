@@ -1,23 +1,20 @@
-import { CoinApi, CoinsListApi } from "store/models/crypto";
 import axios from "axios";
+import { IApiCoin } from "models/interfaces/ICoin";
 
-export const fetchCoinsList = async (perPage: number, currentPage: number) => {
-  const response = await axios.get<CoinsListApi[]>(
-    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=${perPage}&page=${currentPage}`
+export const getCoinsList = async () : Promise<IApiCoin[]> => {
+  const response = await axios.get<IApiCoin[]>(
+    `https://api.coingecko.com/api/v3/coins/`
   );
+  console.log(response.data)
   return response.data;
 };
 
-export const fetchCoin = async (id: string | undefined) => {
-  const response = await axios.get<CoinApi>(
-    `https://api.coingecko.com/api/v3/coins/${id}`
-  );
-  return response.data;
-};
+// запрос для получения графика цены. Дата указана в формате unix время (переводить тут https://www.unixtimestamp.com/)
 
-export const fetchSearchCoins = async (value: string) => {
+export const getChartData = async () => {
   const response = await axios.get(
-    `https://api.coingecko.com/api/v3/search?query=${value}&per_page=7`
+    `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=30`
   );
-  return response.data.coins;
+  console.log(response.data)
+  return response.data;
 };

@@ -2,7 +2,6 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
@@ -47,7 +46,6 @@ module.exports = {
                 filename: '[name]-[hash].css'
             }
         ),
-        new TsCheckerPlugin()
     ].filter(Boolean),
     module: {
         rules:  [
@@ -75,8 +73,8 @@ module.exports = {
         alias: {
             "@components": path.join(srcPath, 'components'),
             "@styles": path.join(srcPath, "styles"),
-            "@app": path.join(srcPath, "App"),
-            "@pages": path.join(srcPath, "App/pages"),
+            "@app": path.join(srcPath, "app"),
+            "@pages": path.join(srcPath, "app/pages"),
             "@configs": path.join(srcPath, "configs"),
             "@utils": path.join(srcPath, "utils"),
             "@assets": path.join(srcPath, "assets"),
