@@ -1,26 +1,31 @@
-import { getCoinsList } from "@api/CryptoApi";
+import { getCoinsList, getChartData } from "@api/CryptoApi";
 import { Card } from "@components/Card/Card";
 import { useEffect, useState } from "react";
 import { ICoin } from "models/interfaces/ICoin";
-import { normalizeCoin } from "../helpers/normalizeCoin";
+import { normalizeCoin, normalizeChartLineData } from "../helpers/index";
+import { Chart } from "@components/index";
 import appStyle from "./App.module.scss";
+
 
 export const App = () : JSX.Element => {
   const[coinList, setCoinList] = useState<ICoin[] | Error>([]);
+  const[coinChartData, setCoinChartData] = useState([]);
 
   useEffect((): void => {
     getCoinsList()
       .then(data => setCoinList(data.map(coin => normalizeCoin(coin))))
       .catch(error => setCoinList(error));
-  }, []);
 
+    getChartData()
+      .then(data => setCoinChartData(data.map(chartData => normalizeChartLineData(chartData))));
+  }, []);
 
   return (
     <div className={appStyle.container}>
       <div className={appStyle.header}>Header</div>
       <div className={appStyle.wrapper}>
         <div className={appStyle.chart}>
-          Chart
+          <Chart data={coinChartData}/>
         </div>
         <div className={appStyle.quotes}>
           {
@@ -32,7 +37,7 @@ export const App = () : JSX.Element => {
                   img={coin.imgSmall}
                   priceChangePercent={coin.priceChange24h}
                   priceChangeCurrency={coin.priceChangePercentage24hInCurrency.usd}
-                  />
+                  />;
               }) :
               <div>{coinList.message}</div>
           }

@@ -5,16 +5,14 @@ export const getCoinsList = async () : Promise<IApiCoin[]> => {
   const response = await axios.get<IApiCoin[]>(
     `https://api.coingecko.com/api/v3/coins/`
   );
-  console.log(response.data)
+
   return response.data;
 };
 
-// запрос для получения графика цены. Дата указана в формате unix время (переводить тут https://www.unixtimestamp.com/)
-
-export const getChartData = async () => {
+export const getChartData = async () : Promise<number[]> => {
   const response = await axios.get(
-    `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=30`
+    `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=1`
   );
-  console.log(response.data)
+
   return response.data;
 };
